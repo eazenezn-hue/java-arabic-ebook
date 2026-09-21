@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "كتاب Java للمبتدئين"
+description = "تطبيق ويب عربي RTL لتعلّم Java للمبتدئين عبر كتاب تفاعلي قابل للبحث والتنقل والتحميل بصيغة PDF، مع إبراز أكواد Java ودعم الوضع الداكن."
+version = "1.0.0"
+id = "artifacts/java-arabic-ebook"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25857
+
+[services.development]
+run = "pnpm --filter @workspace/java-arabic-ebook run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/java-arabic-ebook", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/java-arabic-ebook/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25857"
+BASE_PATH = "/"
